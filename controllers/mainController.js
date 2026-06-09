@@ -26,3 +26,11 @@ exports.mostrarHome = async (req, res) => {
     res.status(500).send('Error al cargar el inicio');
   }
 };
+
+// aca muestra el formulario para subir foto
+exports.mostrarFormularioSubir = (req, res) => {
+  if (!req.session.usuario) {
+    return res.redirect('/login');
+  }
+  res.render('createPost'); 
+};
