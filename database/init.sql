@@ -18,3 +18,11 @@ CREATE TABLE publicaciones (
     etiquetas VARCHAR(255),
     CONSTRAINT fk_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 );
+
+CREATE TABLE imagenes (
+    id SERIAL PRIMARY KEY,
+    publicacion_id INT NOT NULL,
+    ruta_archivo VARCHAR(255) NOT NULL,
+    licencia VARCHAR(50) NOT NULL,
+    CONSTRAINT fk_publicacion FOREIGN KEY (publicacion_id) REFERENCES publicaciones(id) ON DELETE CASCADE
+);
