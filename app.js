@@ -20,6 +20,12 @@ app.use(session({
   saveUninitialized: false
 }));
 
+// Rutas
+const rutasPrincipales = require('./routes/index');
+const rutasAuth = require('./routes/auth');
+
+app.use('/', rutasPrincipales);
+app.use('/', rutasAuth);
 
 const PORT = process.env.PORT || 3000;
 
