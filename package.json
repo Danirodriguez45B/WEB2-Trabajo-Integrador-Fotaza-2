@@ -9,7 +9,7 @@
     "start": "node app.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Daniel Rodriguez",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
