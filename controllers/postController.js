@@ -8,3 +8,39 @@ exports.mostrarFormulario = (req, res) => {
   }
   res.render('createPost');
 };
+
+// guardo la publicacion nueva en postgres con multiples archivos reales y etiquetas
+exports.crearPost = async (req, res) => {
+  try {
+    //  agrego 'etiquetas' que viene desde el formulario
+    const { titulo, descripcion, etiquetas } = req.body;
+    const usuarioId = req.session.usuario.id; // id del usuario logueado
+
+    // creo la publicacion en la tabla 'publicaciones' (guardando las etiquetas directas)
+    const nuevaPublicacion = await Publicacion.create({
+      titulo: titulo,
+      descripcion: descripcion,
+      etiquetas: etiquetas || '', 
+      usuarioId: usuarioId
+    });
+
+    // Si el usuario subio imagenes, las recorre y guarda cada una en la tabla 'archivos'
+    if (req.files && req.files.length > 0) {
+      for (const file of req.files) {
+        // Guarda la ruta interna de la carpeta uploads
+        const urlImagen = `/uploads/${file.filename}`;
+        
+        await Archivo.create({
+          url: urlImagen,
+          publicacionId: nuevaPublicacion.id
+        });
+      }
+    }
+
+    // aca se redirige a la Home para ver el cambio dinamico
+    res.redirect('/');
+  } catch (error) {
+    console.error('Error al crear la publicación:', error);
+    res.status(500).send('Error interno al guardar la publicación');
+  }
+};
