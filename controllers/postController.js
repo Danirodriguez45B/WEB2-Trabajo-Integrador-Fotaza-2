@@ -44,3 +44,33 @@ exports.crearPost = async (req, res) => {
     res.status(500).send('Error interno al guardar la publicación');
   }
 };
+exports.agregarComentario = async (req, res) => {
+  try {
+    if (!req.session.usuario) return res.redirect('/login');
+
+    await Comentario.create({
+      texto: req.body.comentario,
+      publicacionId: req.params.publicacionId,
+      usuarioId: req.session.usuario.id
+    });
+    res.redirect('back');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error al comentar");
+  }
+};
+
+exports.agregarValoracion = async (req, res) => {
+  try {
+    if (!req.session.usuario) return res.redirect('/login');
+
+    await Valoracion.create({
+      publicacionId: req.params.publicacionId,
+      usuarioId: req.session.usuario.id
+    });
+    res.redirect('back');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error al valorar");
+  }
+};
