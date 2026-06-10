@@ -6,7 +6,7 @@ exports.mostrarRegistro = (req, res) => {
   res.render('registro'); 
 };
 
-// GUARDA EL USUARIO EN LA BASE DE DATOS REAL
+// guarda el usuario en la base de datos real
 exports.registrarUsuario = async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -26,7 +26,39 @@ exports.registrarUsuario = async (req, res) => {
   }
 };
 
-// aca muestra el formulario de login (renderiza el login.pug)
+// aca muestra el formulario de login
 exports.mostrarLogin = (req, res) => {
   res.render('login'); 
+};
+
+// Proceso de el inicio de sesion real
+exports.loginUsuario = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Busca si existe el usuario en postgre
+    const user = await Usuario.findOne({ where: { email, password } });
+
+    if (user) {
+      // Guarda al usuario real en la sesion
+      req.session.usuario = {
+        id: user.id,
+        username: user.username,
+        email: user.email
+      };
+      return res.redirect('/');
+    }
+    
+    res.send('<h3>Credenciales incorrectas</h3><a href="/login">Volver a intentar</a>');
+  } catch (error) {
+    console.error("Error en el login:", error);
+    res.status(500).send("Error en el servidor");
+  }
+};
+
+// Cerrar Sesion
+exports.logoutUsuario = (req, res) => {
+  req.session.destroy(() => {
+    res.redirect('/');
+  });
 };
