@@ -25,3 +25,8 @@ exports.registrarUsuario = async (req, res) => {
     res.status(500).send("Error al crear la cuenta en la base de datos");
   }
 };
+
+// aca muestra el formulario de login (renderiza el login.pug)
+exports.mostrarLogin = (req, res) => {
+  res.render('login'); 
+};
