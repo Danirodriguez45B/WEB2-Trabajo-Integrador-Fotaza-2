@@ -34,3 +34,32 @@ exports.mostrarFormularioSubir = (req, res) => {
   }
   res.render('createPost'); 
 };
+
+// aca hago guardar publicacion
+exports.guardarPublicacion = async (req, res) => {
+  try {
+    const { titulo, descripcion, etiquetas } = req.body;
+    const usuarioId = req.session.usuario.id;
+
+    const nuevaPublicacion = await Publicacion.create({
+      titulo: titulo,
+      descripcion: descripcion,
+      etiquetas: etiquetas || '',
+      usuarioId: usuarioId
+    });
+
+    if (req.files && req.files.length > 0) {
+      for (const file of req.files) {
+        const urlImagen = `/uploads/${file.filename}`;
+        await Archivo.create({
+          url: urlImagen,
+          publicacionId: nuevaPublicacion.id
+        });
+      }
+    }
+    res.redirect('/');
+  } catch (error) {
+    console.error('Error al guardar:', error);
+    res.status(500).send('Error interno');
+  }
+};
