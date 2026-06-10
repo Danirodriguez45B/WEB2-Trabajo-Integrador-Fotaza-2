@@ -14,3 +14,20 @@ html
       h2 { color: white; text-align: center; margin-bottom: 20px; }
       a { color: #888; text-decoration: none; }
       a:hover { color: #e74c3c; }
+
+  body
+    div.form-container
+      h2 Iniciar Sesión
+      form(action="/login", method="POST")
+        div(style="margin-bottom: 15px;")
+          label(style="color: #ccc; display: block; margin-bottom: 5px;") Correo Electrónico
+          input(type="email", name="email", required=true, style="width: 100%; padding: 10px; background: #2a2a2a; border: 1px solid #444; color: white; border-radius: 4px; box-sizing: border-box;")
+        
+        div(style="margin-bottom: 15px;")
+          label(style="color: #ccc; display: block; margin-bottom: 5px;") Contraseña
+          input(type="password", name="password", required=true, style="width: 100%; padding: 10px; background: #2a2a2a; border: 1px solid #444; color: white; border-radius: 4px; box-sizing: border-box;")
+        
+        button(type="submit", style="width: 100%; padding: 10px; background-color: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;") Ingresar
+      
+      p(style="text-align: center; margin-top: 15px;")
+        a(href="/") Volver al inicio

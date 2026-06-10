@@ -7,14 +7,52 @@ html
     include partials/header.pug
 
     main.main-container
-      //- Columna principal
       section.col-recientes
         h2 Recientes
-        //- aca voy a ir cargando tarjetas
-      
-      //- Columna lateral
+        
+        if publicaciones && publicaciones.length > 0
+          each post in publicaciones
+            if post && post.titulo 
+              div.tarjeta-post
+                h3
+                  a(href="/publicacion/" + post.id, style="text-decoration: none; color: white;")= post.titulo
+                
+                //- Fecha y Hora
+                div(style="font-size: 11px; color: #777; margin-bottom: 5px;")
+                  | Publicado el: #{post.createdAt ? new Date(post.createdAt).toLocaleDateString() : 'Fecha desconocida'}
+                  | a las #{post.createdAt ? new Date(post.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : ''}
+                
+                //- Autor
+                div.post-meta Publicado por: 
+                  if post.Usuario
+                    a(href="/perfil/" + post.Usuario.username, style="color: #ff4500; text-decoration: none; font-weight: bold;")
+                      span= post.Usuario.username
+                  else
+                    span Usuario Anónimo
+                
+                p= post.descripcion
+                
+                //- Etiquetas
+                if post.etiquetas && post.etiquetas.trim() !== ''
+                  div(style="display: flex; flex-wrap: wrap; margin-top: 5px; margin-bottom: 10px;")
+                    each tag in post.etiquetas.split(',')
+                      if tag.trim() !== ''
+                        span(style="background-color: #ff4500; color: white; padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: bold; margin-right: 5px; margin-bottom: 5px;")= '#' + tag.trim()
+
+                //- Imagen
+                if post.Archivos && post.Archivos.length > 0
+                  img.post-img(src=post.Archivos[0].url, alt=post.titulo)
+                else if post.Archivo && post.Archivo.url
+                  img.post-img(src=post.Archivo.url, alt=post.titulo)
+        else
+          div.tarjeta-post
+            p No hay publicaciones recientes. ¡Sé el primero en subir una!
+
       aside.col-votados
         h2 Mas Votados
         div.tarjeta-post
           h3 ¡Fotaza Destacada!
+          div.post-meta Publicado por: 
+            span Admin
           p Una muestra del potencial de la comunidad.
+          img.post-img(src="https://picsum.photos/300/200", alt="Destacada")
