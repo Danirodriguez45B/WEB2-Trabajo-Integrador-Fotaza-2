@@ -4,3 +4,65 @@ html
     title= post.titulo
     link(rel="stylesheet", href="/style/index.css") 
   body
+    //- aca incluyo el header
+    include partials/header.pug
+
+    main.container(style="max-width: 800px; margin: 20px auto; padding: 20px; background: #1a1a1a; border-radius: 8px;")
+      
+      h1(style="color: white; margin-bottom: 5px;")= post.titulo
+      p(style="color: #888; font-size: 0.9em; margin-bottom: 20px;") 
+        | Publicado por: 
+        a(href="/perfil/" + post.Usuario.username, style="color: #ff4500; text-decoration: none;")
+          strong= post.Usuario.username
+
+      if post.Archivos && post.Archivos.length > 0
+        each img in post.Archivos
+          img(src=img.url, style="width: 100%; border-radius: 4px; margin-bottom: 20px;")
+
+      p(style="color: #ddd; font-size: 1.1em; line-height: 1.6; margin-bottom: 10px;")= post.descripcion
+
+      //- Bloque de Estrellas
+      div(style="margin: 30px 0; text-align: center;")
+        p(style="color: #888; margin-bottom: 10px; font-size: 0.9em;") 
+          | #{usuario ? 'Tu calificación:' : 'Inicia sesión para valorar:'}
+        
+        div(style="display: flex; justify-content: center; gap: 10px;")
+          each i in [1, 2, 3, 4, 5]
+            if usuario
+              //- Si esta logueado: formulario funcional
+              form(action="/publicacion/" + post.id + "/valorar", method="POST", style="display:inline;")
+                input(type="hidden", name="puntos", value=i)
+                - let esAmarilla = (miValoracion && i <= miValoracion.puntos) ? "#ffd700" : "#555"
+                button(type="submit", style="background: none; border: none; cursor: pointer; color: " + esAmarilla + "; font-size: 3em; padding: 0; line-height: 1;") ★
+            else
+              //- Si no esta logueado lo manda a link hacia login
+              a(href="/login", style="text-decoration: none;")
+                button(type="button", style="background: none; border: none; cursor: pointer; color: #555; font-size: 3em; padding: 0; line-height: 1;") ★
+        
+        if usuario
+          p(style="color: #fff; font-size: 1.1em; font-weight: bold; margin-top: 15px;") 
+            | Puntos otorgados: #{miValoracion ? miValoracion.puntos : 0}
+
+      hr(style="border: 0; border-top: 1px solid #333; margin: 30px 0;")
+
+      h3(style="color: white;") Comentarios
+      if post.Comentarios && post.Comentarios.length > 0
+        each comm in post.Comentarios
+          div.comentario-card(style="background: #252525; padding: 15px; margin-bottom: 10px; border-radius: 5px; border-left: 3px solid #ff4500;")
+            div(style="display: flex; justify-content: space-between;")
+              strong(style="color: #ff4500;")= comm.Usuario.username
+              span(style="font-size: 0.8em; color: #666;")= new Date(comm.createdAt).toLocaleString()
+            p(style="margin: 5px 0 0 0; color: #ccc;")= comm.texto
+      else
+        p(style="color: #666;") Aún no hay comentarios.
+
+      hr(style="border: 0; border-top: 1px solid #333; margin: 30px 0;")
+      h3(style="color: white;") Publicar comentario
+      if usuario
+        form(action="/publicacion/" + post.id + "/comentar", method="POST", style="margin-top: 20px; background: #252525; padding: 15px; border-radius: 5px;")
+          textarea(name="texto", placeholder="Escribe un comentario...", required, style="width: 100%; height: 80px; background: #1a1a1a; color: white; border: 1px solid #444; padding: 10px; border-radius: 4px; box-sizing: border-box;")
+          button(type="submit", style="margin-top: 10px; background: #ff4500; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold;") Comentar
+      else
+        p(style="color: #888;") 
+          a(href="/login", style="color: #ff4500;") Inicia sesión
+          |  para poder comentar esta publicación.

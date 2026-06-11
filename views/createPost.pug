@@ -31,3 +31,29 @@ html
         background-color: #28a745; color: white; border: none;
         padding: 12px; width: 100%; border-radius: 4px; font-weight: bold; cursor: pointer;
       }
+
+  body.body-subir-foto
+    include partials/header.pug
+    
+    div.container-subir
+      h2(style="text-align: center; margin-bottom: 20px;") Crear nueva 
+        span(style="color: #ff4500;") publicación
+      
+      form(action="/subir", method="POST", enctype="multipart/form-data")
+        div.form-group
+          label Título de la foto:
+          input(type="text", name="titulo", required=true, placeholder="Tu título aquí")
+        
+        div.form-group
+          label Seleccionar Imágenes:
+          input(type="file", name="imagenes", accept="image/*", multiple=true, required=true)
+
+        div.form-group
+          label Descripción:
+          textarea(name="descripcion", rows="4", placeholder="Tu descripción aquí...")
+        
+        div.form-group
+          label(for="etiquetas") Etiquetas (separadas por coma):
+          input(type="text", name="etiquetas", id="etiquetas", placeholder="ej: naturaleza, minimalista")
+        
+        button.btn-submit(type="submit") ➕ Publicar Foto
