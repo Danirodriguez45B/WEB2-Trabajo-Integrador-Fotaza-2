@@ -19,7 +19,7 @@ exports.registrarUsuario = async (req, res) => {
     });
 
     //En vez de mandar un cartel de texto, lo mando al login
-    res.redirect('/login');
+    res.redirect('/auth/login');
   } catch (error) {
     console.error("Error al registrar usuario:", error);
     res.status(500).send("Error al crear la cuenta en la base de datos");
