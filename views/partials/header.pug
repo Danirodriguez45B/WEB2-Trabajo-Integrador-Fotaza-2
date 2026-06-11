@@ -26,10 +26,10 @@ header
         span(style="margin-right: 15px; color: #ff8c00; font-weight: bold;") Hola #{usuario.username}
         a(href="/subir", style="margin-right: 15px; color: white; text-decoration: none;") Publicar
         a(href="/perfil/" + usuario.username, style="margin-right: 15px; color: white; text-decoration: none;") Perfil
-        a(href="/logout", style="color: #ff4500; text-decoration: none;") Salir 🚪
+        a(href="/auth/logout", style="color: #ff4500; text-decoration: none;") Salir 🚪
       else
-        a(href="/login", style="margin-right: 15px; color: white; text-decoration: none;") Iniciar Sesión
-        a(href="/registro", class="btn-register", style="text-decoration: none;") Crear Cuenta
+        a(href="/auth/login", style="margin-right: 15px; color: white; text-decoration: none;") Iniciar Sesión
+        a(href="/auth/registro", class="btn-register", style="text-decoration: none;") Crear Cuenta
 
 script.
   var searchInput = document.getElementById('search-input');
