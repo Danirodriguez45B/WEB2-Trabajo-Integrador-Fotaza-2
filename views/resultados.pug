@@ -4,3 +4,34 @@ html
     title Resultados - Fotaza
     link(rel="stylesheet", href="/style/index.css")
   body
+    //- aca pongo el header que contiene el buscador y el usuario logueado
+    include partials/header.pug
+    
+    main.main-container
+      h2 Resultados de la búsqueda:
+      
+      if publicaciones && publicaciones.length > 0
+        section.col-recientes
+          each post in publicaciones
+            div.tarjeta-post
+              h3= post.titulo
+              
+              div.post-meta 
+                | Publicado por: 
+                //- aca uso el link al perfil si tienes la ruta
+                a(href="/perfil/" + (post.Usuario ? post.Usuario.username : ''), style="color: #ff4500; text-decoration: none;") 
+                  = post.Usuario ? post.Usuario.username : 'Anónimo'
+                |  el #{new Date(post.createdAt).toLocaleDateString()}
+              
+              if post.Archivos && post.Archivos.length > 0
+                img.post-img(src=post.Archivos[0].url, alt=post.titulo)
+              else
+                p(style="color: #666; font-size: 12px;") [Imagen no disponible]
+              
+              p= post.descripcion
+              div(style="margin-top: 10px; font-size: 12px;")
+                b tags: 
+                = post.etiquetas
+      else
+        div.tarjeta-post
+          p No se encontraron publicaciones con ese criterio.
