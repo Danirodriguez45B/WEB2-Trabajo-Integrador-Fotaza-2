@@ -114,6 +114,10 @@ exports.verPerfilUsuario = async (req, res) => {
     const username = req.params.username;
     const usuarioPerfil = await Usuario.findOne({ where: { username: username } });
     if (!usuarioPerfil) return res.status(404).send('Usuario no encontrado');
+    
+    const cantidadSeguidores = await Seguidor.count({ 
+        where: { seguidoId: usuarioPerfil.id } 
+    });
 
     // verifica si lo sigue
     let yaSigues = false;
@@ -139,7 +143,8 @@ exports.verPerfilUsuario = async (req, res) => {
       usuarioPerfil, 
       publicaciones, 
       usuario: req.session.usuario || null,
-      yaSigues 
+      yaSigues,
+      cantidadSeguidores 
     });
   } catch (error) {
     console.error(error);
