@@ -4,10 +4,12 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "db:init": "node config/db.js",
-    "start": "node app.js"
-  },
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "db:init": "node -e \"const { sequelize } = require('./models/index'); sequelize.sync({ force: true }).then(() => console.log('Base de datos sincronizada'))\" && node seeders/seed.js",
+  "start": "node app.js",
+  "db:reset": "node -e \"const { sequelize } = require('./models/index'); sequelize.sync({ force: true }).then(() => { console.log('Base de datos reseteada'); process.exit(); });\"",
+  "db:update": "node -e \"const { sequelize } = require('./models/index'); sequelize.sync({ alter: true }).then(() => { console.log('Base de datos actualizada'); process.exit(); });\""
+},
   "keywords": [],
   "author": "Daniel Rodriguez",
   "license": "ISC",
