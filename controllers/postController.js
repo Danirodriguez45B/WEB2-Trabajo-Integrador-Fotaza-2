@@ -6,7 +6,9 @@ exports.mostrarFormulario = (req, res) => {
   if (!req.session.usuario) {
     return res.redirect('/login');
   }
-  res.render('createPost');
+  res.render('createPost', { 
+    usuario: req.session.usuario 
+  });
 };
 
 // guardo la publicacion nueva en postgres con multiples archivos reales y etiquetas
