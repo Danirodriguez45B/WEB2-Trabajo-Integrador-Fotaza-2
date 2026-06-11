@@ -61,3 +61,118 @@ header h1 span {
     max-width: 1300px;
     margin: 0 auto;
 }
+
+.col-recientes {
+    flex: 2;
+}
+
+.col-votados {
+    flex: 1;
+}
+
+h2 {
+    color: #ffffff;
+    border-left: 4px solid #e74c3c;
+    padding-left: 10px;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+/* tarjetas de las publicaciones */
+.tarjeta-post {
+    background-color: #1e1e1e;
+    border: 1px solid #2d2d2d;
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.tarjeta-post h3 {
+    color: #ffffff;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.post-meta {
+    font-size: 12px;
+    color: #888888;
+    margin-bottom: 15px;
+}
+
+.post-meta span {
+    color: #e74c3c;
+}
+
+/* estilo para las imagenes */
+.post-img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #333;
+}
+.resultados-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.resultados-grid .tarjeta-post {
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 30px;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.resultados-grid .post-img, .col-recientes .post-img {
+    display: block !important;
+    width: 100% !important;
+    max-width: 500px !important;
+    height: auto !important;
+    margin: 15px auto !important;
+    border-radius: 4px;
+    border: 1px solid #333;
+}
+.comentario-card {
+    border-left: 3px solid #ff4500;
+    padding-left: 15px;
+    margin-bottom: 15px;
+}
+.form-container {
+  background-color: #1e1e1e;
+  padding: 30px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  width: 100%;
+  max-width: 400px;
+  margin: 50px auto;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.form-container input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  background: #2a2a2a;
+  border: 1px solid #444;
+  color: white;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.form-container button {
+  width: 100%;
+  padding: 10px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+}
