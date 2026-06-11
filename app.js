@@ -25,7 +25,7 @@ const rutasPrincipales = require('./routes/index');
 const rutasAuth = require('./routes/auth');
 
 app.use('/', rutasPrincipales);
-app.use('/', rutasAuth);
+app.use('/auth', rutasAuth);
 
 const PORT = process.env.PORT || 3000;
 
