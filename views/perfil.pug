@@ -4,3 +4,29 @@ html
     title Perfil de #{usuarioPerfil.username}
     link(rel="stylesheet", href="/style/index.css")
   body
+    include partials/header.pug
+
+    main.main-container
+      section.col-recientes
+        //- aca pongo el contenedor del perfil: Nombre y boton de seguir
+        div(style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #333;")
+          div(style="display: flex; align-items: center; gap: 15px;")
+            h1(style="margin: 0; font-size: 2em; color: white;")= usuarioPerfil.username
+          
+          if usuario && usuario.id !== usuarioPerfil.id
+            form(action="/usuario/" + usuarioPerfil.id + "/seguir", method="POST")
+              button(type="submit", style="padding: 10px 25px; cursor: pointer; background: " + (yaSigues ? "#444" : "#ff4500") + "; color: white; border: none; border-radius: 20px; font-weight: bold; transition: 0.3s;")
+                = yaSigues ? "Siguiendo" : "Seguir"
+
+        h2(style="margin-bottom: 20px; color: #ff4500;") Publicaciones
+
+        if publicaciones && publicaciones.length > 0
+          each post in publicaciones
+            div.tarjeta-post(style="margin-bottom: 25px; background: #1a1a1a; padding: 20px; border-radius: 8px; border: 1px solid #333;")
+              h3(style="margin-top: 0; color: white;")= post.titulo
+              if post.Archivos && post.Archivos.length > 0
+                img.post-img(src=post.Archivos[0].url, alt=post.titulo, style="width: 100%; border-radius: 4px; margin-bottom: 15px;")
+              p(style="color: #ddd; font-size: 1em; margin-bottom: 10px;")= post.descripcion
+        else
+          div.tarjeta-post(style="background: #1a1a1a; padding: 20px; border-radius: 8px; border: 1px solid #333;")
+            p(style="color: #ccc;") Este usuario todavía no ha subido publicaciones.
