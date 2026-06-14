@@ -101,7 +101,9 @@ npm start
 ```
 
 ---
-
-
+### Reset de servidor
+```bash
+npm run db:reset
+```
 
 
