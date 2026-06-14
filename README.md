@@ -33,6 +33,7 @@ Para probar el funcionamiento del sistema se ofrece el siguiente usuario
 * **👤 Usuario:** `usuario@gmail.com`
 * **🔑 Contraseña:** `123`
 
+*en entorno local*
 ---
 
 ##  Tecnologias Utilizadas
